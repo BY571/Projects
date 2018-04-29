@@ -2,8 +2,8 @@
 
  toDo:
 ### class: 
-- txt lesen --- liste als einzelne liste gespeichert
+- listen combinieren
 
 ### Allgemein:
-- Menüführung optimieren
-- Anwendung für Ankiapp /Flashcard program
+- Menüführung einbringen und optimieren
+
