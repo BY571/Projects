@@ -32,7 +32,21 @@ class Vokabelliste:
     
     def head(self):
         print(self.list)
-    
+
+    def print_last(self, n = 10):
+        """
+        Prints the last given words
+        Input: nr of "n"  last words
+        Out: "n" last words
+        """
+        print(self.list[len(self.list)-n:])
+
+    def remove_word(self, element):
+        """
+        Removes the applied word in the list
+        """
+        if element in self.list: self.list.remove(element)
+
     def checking_for_multiple(self):
         """
         Prüft ob doppelte Einträge vorhanden sind- falls ja werden diese entfernt
@@ -68,8 +82,6 @@ class Vokabelliste:
 
 
     def combine_lists(self, liste2 = []):
-
-
         try:
             file = open(liste2, "rb")
             liste2 = pickle.load(file)
@@ -80,8 +92,13 @@ class Vokabelliste:
         except:
             print("Combining was incorrect! Check if input variable is a list!")
 
-    def übersetzen(self):
-        print("Übersetzung startet: \n")
+    def translate_export(self, excel = False, csv = True ):
+        """
+        Translates the list and exports it as excel or csv file
+        Input: excel = bool (default = False), csv = bool (default = False)
+        Out: Translated list in xlsx or csv format 
+        """
+        print("Translation has started: \n")
         # declare Translator
         translator = Translator()
         # define DataFrame
@@ -95,11 +112,13 @@ class Vokabelliste:
             dest = "es"
 
         for i in range(len(df[self.language])):
-            #print(data["Englisch"][i])
             übersetzung = translator.translate(df[self.language][i], dest = dest)
             df[self.output_language][i] = übersetzung.text
         print("Alle Vokabeln übersetzt!\n")
-        df.to_excel("Übersetzungsliste_{}.xlsx".format(datetime.date.today()))
+        if excel == True and csv == False:
+            df.to_excel("Übersetzungsliste_{}.xlsx".format(datetime.date.today()), index= False,header=False)
+        if csv == True and excel == False:
+            df.to_csv("Übersetzungsliste_{}.csv".format(datetime.date.today()), index= False, sep=",", header=False) 
         print("Übersetzung gespeichert!")
 
 
